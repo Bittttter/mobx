@@ -76,13 +76,15 @@ export function getEnhancerFromOptions(options: CreateObservableOptions): IEnhan
     return options.deep === true
         ? deepEnhancer
         : options.deep === false
-        ? referenceEnhancer
-        : getEnhancerFromAnnotation(options.defaultDecorator)
+            ? referenceEnhancer
+            : getEnhancerFromAnnotation(options.defaultDecorator)
 }
 
+// 从 options 里获取注解
 export function getAnnotationFromOptions(
     options?: CreateObservableOptions
 ): Annotation | undefined {
+    // defaultDecorator 是个啥？没看明白
     return options ? options.defaultDecorator ?? createAutoAnnotation(options) : undefined
 }
 
@@ -187,6 +189,10 @@ const observableFactories: IObservableFactory = {
         const o = asCreateObservableOptions(options)
         return new ObservableSet<T>(initialValues, getEnhancerFromOptions(o), o.name)
     },
+    /**
+     * 如果把一个普通的 JavaScript 对象传递给 observable 方法，对象的所有属性都将被拷贝至一个克隆对象并将克隆对象转变成可观察的。
+     *  (普通对象是指不是使用构造函数创建出来的对象，而是以 Object 作为其原型，或者根本没有原型。) 
+     */
     object<T = any>(
         props: T,
         decorators?: AnnotationsMap<T, never>,
@@ -195,6 +201,7 @@ const observableFactories: IObservableFactory = {
         return extendObservable(
             globalState.useProxies === false || options?.proxy === false
                 ? asObservableObject({}, options)
+                // 用 proxy 的话..
                 : asDynamicObservableObject({}, options),
             props,
             decorators
@@ -207,4 +214,5 @@ const observableFactories: IObservableFactory = {
 } as any
 
 // eslint-disable-next-line
+// assign 就是 Object.assign，给 createObservable 这个函数增加属性，如 box, map 来生成特定的 observable
 export var observable: IObservableFactory = assign(createObservable, observableFactories)

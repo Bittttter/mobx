@@ -630,6 +630,7 @@ export function asObservableObject(
         return target
     }
 
+    /** 如果这个对象不是可以添加属性的，die */
     if (__DEV__ && !Object.isExtensible(target))
         die("Cannot make the designated object observable; it is not extensible")
 
@@ -674,6 +675,7 @@ function getCachedObservablePropDescriptor(key) {
 
 export function isObservableObject(thing: any): boolean {
     if (isObject(thing)) {
+        // 还是老生常谈的 $mobx 属性
         return isObservableObjectAdministration((thing as any)[$mobx])
     }
     return false

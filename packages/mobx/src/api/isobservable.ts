@@ -12,6 +12,8 @@ import {
 
 function _isObservable(value, property?: PropertyKey): boolean {
     if (!value) return false
+
+    // isObservableProp 时调用
     if (property !== undefined) {
         if (__DEV__ && (isObservableMap(value) || isObservableArray(value)))
             return die(
@@ -32,6 +34,7 @@ function _isObservable(value, property?: PropertyKey): boolean {
     )
 }
 
+// check args length
 export function isObservable(value: any): boolean {
     if (__DEV__ && arguments.length !== 1)
         die(

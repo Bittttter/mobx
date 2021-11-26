@@ -32,6 +32,7 @@ export function configure(options: {
                 ? true
                 : useProxies === NEVER
                 ? false
+                // 通过 Proxy 对象是否存在来判断能否使用 Proxy
                 : typeof Proxy !== "undefined"
     }
     if (useProxies === "ifavailable") globalState.verifyProxies = true

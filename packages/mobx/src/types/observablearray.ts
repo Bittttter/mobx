@@ -529,5 +529,7 @@ const isObservableArrayAdministration = createInstanceofPredicate(
 )
 
 export function isObservableArray(thing): thing is IObservableArray<any> {
+    // Administration 是行政，管理的意思？？
+    // thing 的私有属性 $mobx 里的 ObservableArrayAdministration 属性为 true
     return isObject(thing) && isObservableArrayAdministration(thing[$mobx])
 }

@@ -20,6 +20,7 @@ export interface Lambda {
 const hasProxy = typeof Proxy !== "undefined"
 const plainObjectString = Object.toString()
 
+/** 断言是否能用 Proxy */
 export function assertProxies() {
     if (!hasProxy) {
         die(
@@ -80,10 +81,12 @@ export function isObject(value: any): value is Object {
     return value !== null && typeof value === "object"
 }
 
+/** plainObject 纯对象，区别于 RegExp,Date 那些东西 */
 export function isPlainObject(value) {
     if (!isObject(value)) return false
     const proto = Object.getPrototypeOf(value)
     if (proto == null) return true
+    // 是某个自定义类的实例也不行哈
     return proto.constructor?.toString() === plainObjectString
 }
 
@@ -96,6 +99,7 @@ export function isGenerator(obj: any): boolean {
     return false
 }
 
+/** 给对象添加一个不可枚举的属性 */
 export function addHiddenProp(object: any, propName: PropertyKey, value: any) {
     defineProperty(object, propName, {
         enumerable: false,
@@ -114,6 +118,7 @@ export function addHiddenFinalProp(object: any, propName: PropertyKey, value: an
     })
 }
 
+/** 通过谓词创建实例？其实就是返回一个判断函数，判断原型上的 `isMobX[theClass]` 是否为 true */
 export function createInstanceofPredicate<T>(
     name: string,
     theClass: new (...args: any[]) => T

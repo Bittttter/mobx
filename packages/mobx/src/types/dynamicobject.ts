@@ -11,6 +11,7 @@ import {
     asObservableObject
 } from "../internal"
 
+/** 获取 $mobx */
 function getAdm(target): ObservableObjectAdministration {
     return target[$mobx]
 }

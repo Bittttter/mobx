@@ -438,6 +438,8 @@ export class ObservableMap<K = any, V = any>
     }
 }
 
+
+// 这里其实就是给 ObservableMap class 定义了一个属性 isMobXObservableMap 为 true，所有这个 class 的实例都会有这个属性。
 // eslint-disable-next-line
 export var isObservableMap = createInstanceofPredicate("ObservableMap", ObservableMap) as (
     thing: any

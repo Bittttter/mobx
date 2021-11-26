@@ -14,6 +14,7 @@ import {
     Lambda
 } from "../internal"
 
+/** private value Symbol("mobx administration") */
 export const $mobx = Symbol("mobx administration")
 
 export interface IAtom extends IObservable {
