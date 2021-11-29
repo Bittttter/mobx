@@ -22,7 +22,9 @@ export interface IAtom extends IObservable {
     reportChanged()
 }
 
+// Atom 原子
 export class Atom implements IAtom {
+    /** 待观察？ */
     isPendingUnobservation_ = false // for effective unobserving. BaseAtom has true, for extra optimization, so its onBecomeUnobserved never gets called, because it's not needed
     isBeingObserved_ = false
     observers_ = new Set<IDerivation>()

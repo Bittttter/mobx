@@ -171,11 +171,13 @@ export function toPrimitive(value) {
     return value === null ? null : typeof value === "object" ? "" + value : value
 }
 
+// 涉及原型链的知识 instance.__proto__ === class.prototype
 export function hasProp(target: Object, prop: PropertyKey): boolean {
     return objectPrototype.hasOwnProperty.call(target, prop)
 }
 
 // From Immer utils
+/** 获取对象属性的 descriptors */
 export const getOwnPropertyDescriptors =
     Object.getOwnPropertyDescriptors ||
     function getOwnPropertyDescriptors(target: any) {

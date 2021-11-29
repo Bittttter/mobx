@@ -634,6 +634,7 @@ export function asObservableObject(
     if (__DEV__ && !Object.isExtensible(target))
         die("Cannot make the designated object observable; it is not extensible")
 
+    // 开发环境给个名字
     const name =
         options?.name ??
         (__DEV__
@@ -642,10 +643,12 @@ export function asObservableObject(
               }@${getNextId()}`
             : "ObservableObject")
 
+    // 定义一个 adm
     const adm = new ObservableObjectAdministration(
         target,
         new Map(),
         String(name),
+        // 如果没有 options 返回 undefined
         getAnnotationFromOptions(options)
     )
 

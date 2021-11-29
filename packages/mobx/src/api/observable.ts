@@ -190,7 +190,7 @@ const observableFactories: IObservableFactory = {
         return new ObservableSet<T>(initialValues, getEnhancerFromOptions(o), o.name)
     },
     /**
-     * 如果把一个普通的 JavaScript 对象传递给 observable 方法，对象的所有属性都将被拷贝至一个克隆对象并将克隆对象转变成可观察的。
+     * 如果把一个 plainObject 传递给 observable 方法，对象的所有属性都将被拷贝至一个克隆对象并将克隆对象转变成可观察的。
      *  (普通对象是指不是使用构造函数创建出来的对象，而是以 Object 作为其原型，或者根本没有原型。) 
      */
     object<T = any>(
@@ -199,6 +199,7 @@ const observableFactories: IObservableFactory = {
         options?: CreateObservableOptions
     ): T {
         return extendObservable(
+            // 一个带 $mobx 属性的空对象
             globalState.useProxies === false || options?.proxy === false
                 ? asObservableObject({}, options)
                 // 用 proxy 的话..
